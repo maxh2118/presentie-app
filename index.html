@@ -421,6 +421,47 @@
             color: #333;
         }
 
+        /* Datum selector stijlen */
+        .date-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .date-navigation button {
+            padding: 8px 15px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #4facfe;
+            color: white;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .date-navigation button:hover {
+            background: #00f2fe;
+            transform: translateY(-1px);
+        }
+
+        .date-navigation input[type="date"] {
+            padding: 8px 12px;
+            border: 2px solid #ced4da;
+            border-radius: 8px;
+            font-size: 1em;
+            color: #333;
+            text-align: center;
+            cursor: pointer;
+            background: white;
+        }
+
+
         /* Media queries voor responsiviteit */
         @media (max-width: 768px) {
             .attendance-grid {
@@ -446,13 +487,16 @@
                 height: 60px;
                 max-width: 200px;
             }
+            .date-navigation {
+                flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://swv-zuidutrecht.nl/wp-content/uploads/2022/12/Logo-768x266.jpg",PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDMwMCAxNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Im9yYW5nZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkE1MDA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGOD4wMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InllbGxvdyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkQ3MDA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGQzEwNztzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdyZWVuIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KCiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMzM0NEMzI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzIyOEIyMjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbWUiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojQUZGRjJGO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5QUNEMzI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhcjxncmFkaWVudD4KICAgIDxsaW5lYXJncmFkaWVudCBpZD0iYmx1ZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM0MTY5RTE7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFFOTBGRjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpZ2h0Ymx1ZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM4N0NFRUI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6Izg3Q0VFQTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InB1cnBsZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MzcwREI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzhBMjJFNTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gViBzaGFwZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjQwLDIwIDgwLDIwIDExNSw3NSA3NSw3NSB9cmVhZ3JlZW4iLz4KICA8cG9seWdvbiBwb2ludHM9IjgwLDIwIDEyMCwyMCAxMTUsNzUgODAsNzUigiBmaWxsPSJ1cmwoI3llbGxvdykiLz4KICA8cG9seWdvbiBwb2ludHM9IjE4MCwyMCAyMjAsMjAgMTg1LDc1IDE1MCw3NSIgZmlsbD0idXJsKCNncmVlZW4pIi8+CiAgPHBvbHlnb24gcGpoaW50cz0iNTUwLDIwIDU5MCwyMCA1ODAsNzAgNTQ1LDc1IiBmaWxsPSJ1cmwoI2xpbWUpIi8+CiAgIS0tIEJvdHRvbSBlbGVtZW50cyAtLT4KICA8cG9seWdvbiBwb2ludHM9IjQwLDkwIDgwLDkwIDExNSwxMzAgNDAsMTMwIiBmaWxsPSJ1cmwoI2xpZ2h0Ymx1ZSkiLz4KICA8cG9seWdvbiBwb2ludHM9IjgwLDkwIDEyMCw5MCAxMTUsMTMwIDgwLDEzMCIgZmlsbD0idXJsKCNibHVlKSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTIwLDkwIDE2MCw5MCAyMjAsMTMwIDExNSwxMzAiIGZpbGw9InVybCgjcHVycGxlKSIvPgogIDx0ZXh0IHg9IjI2MCIgeT0iNDAiIGZvbnQtZmFtaWx5PSJBCMLYW5hLCBzYW5zLXNlcmlmIiAKICAgICAgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtc2l6ZT0iMjhweCIgZmlsbD0iIzM0OTZGQSI+UmVib3VuZzwvdGV4dD4KICA8dGV4dCB4PSIyNjAiIHk9IjY1IiBmb250LWZhbWl5PSJBcmlhbCwgc2Fucy1zZXJpZiIgCiAgICAgIGZvbnQtc2l6ZT0iMThweCIgZmlsbD0iIzMzMyI+WnVpZC1VdHJlY2h0PC90ZXh0PgogIDx0ZXh0IHg9IjI2MCIgeT0iOTAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgCiAgICAgIGZvbnQtc2l6ZT0iMTJweCIgZm9udC1zdHlsZT0iaXRhbGljIj5QZXJzb29ubGlqa2UgYWFuZGFhY2h0IGVuIGNvYWNoaW5nPC90ZXh0PgogIDx0ZXh0IHg9IjI2MCIgeT0iMTA1IiBmb250LWZhbWl5PSJBcmlhbCwgc2Fucy1zZXJpZiIgCiAgICAgIGZvbnQtc2l6ZT0iMTJweCIgZmllbGwtc3R5bGU9Iml0YWxpYyI+aW4gZWVuIHRpajZlXGFhZGVsaWprZSBzY2hvb2w8L3RleHRwPgo8L3N2Zz4=" 
+            <img src="https://swv-zuidutrecht.nl/wp-content/uploads/2022/12/Logo-768266.jpg",PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDMwMCAxNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Im9yYW5nZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkE1MDA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGOD4wMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InllbGxvdyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkQ3MDA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGQzEwNztzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdyZWVuIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KCiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMzM0NEMzI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzIyOEIyMjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbWUiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojQUZGRjJGO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5QUNEMzI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhcjxncmFkaWVudD4KICAgIDxsaW5lYXJncmFkaWVudCBpZD0iYmx1ZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM0MTY5RTE7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFFOTBGRjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpZ2h0Ymx1ZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM4N0NFRUI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6Izg3Q0VFQTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InB1cnBsZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MzcwREI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzhBMjJFNTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gViBzaGFwZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjQwLDIwIDgwLDIwIDExNSw3NSA3NSw3NSB9cmVhZ3JlZW4iLz4KICA8cG9seWdvbiBwb2ludHM9IjgwLDIwIDEyMCwyMCAxMTUsNzUgODAsNzUigiBmaWxsPSJ1cmwoI3llbGxvdykiLz4KICA8cG9seWdvbiBwb2ludHM9IjE4MCwyMCAyMjAsMjAgMTg1LDc1IDE1MCw3NSIgZmlsbD0idXJsKCNncmVlZW4pIi8+CiAgPHBvbHlnb24gcGpoaW50cz0iNTUwLDIwIDU5MCwyMCA1ODAsNzAgNTQ1LDc1IiBmaWxsPSJ1cmwoI2xpbWUpIi8+CiAgIS0tIEJvdHRvbSBlbGVtZW50cyAtLT4KICA8cG9seWdvbiBwb2ludHM9IjQwLDkwIDgwLDkwIDExNSwxMzAgNDAsMTMwIiBmaWxsPSJ1cmwoI2xpZ2h0Ymx1ZSkiLz4KICA8cG9seWdvbiBwb2ludHM9IjgwLDkwIDEyMCw5MCAxMTUsMTMwIDgwLDEzMCIgZmlsbD0idXJsKCNibHVlKSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTIwLDkwIDE2MCw5MCAyMjAsMTMwIDExNSwxMzAiIGZpbGw9InVybCgjcHVycGxlKSIvPgogIDx0ZXh0IHg9IjI2MCIgeT0iNDAiIGZvbnQtZmFtaWx5PSJBCMLYW5hLCBzYW5zLXNlcmlmIiAKICAgICAgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtc2l6ZT0iMjhweCIgZmlsbD0iIzM0OTZGQSI+UmVib3VuZzwvdGV4dD4KICA8dGV4dCB4PSIyNjAiIHk9IjY1IiBmb250LWZhbWl5PSJBcmlhbCwgc2Fucy1zZXJpZiIgCiAgICAgIGZvbnQtc2l6ZT0iMThweCIgZmlsbD0iIzMzMyI+WnVpZC1VdHJlY2h0PC90ZXh0PgogIDx0ZXh0IHg9IjI2MCIgeT0iOTAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgCiAgICAgIGZvbnQtc2l6ZT0iMTJweCIgZm9udC1zdHlsZT0iaXRhbGljIj5QZXJzb29ubGlqa2UgYWFuZGFhY2h0IGVuIGNvYWNoaW5nPC90ZXh0PgogIDx0ZXh0IHg9IjI2MCIgeT0iMTA1IiBmb250LWZhbWl5PSJBcmlhbCwgc2Fucy1zZXJpZiIgCiAgICAgIGZvbnQtc2l6ZT0iMTJweCIgZmllbGwtc3R5bGU9Iml0YWxpYyI+aW4gZWVuIHRpajZlXGFhZGVsaWprZSBzY2hvb2w8L3RleHRwPgo8L3N2Zz4=" 
                  alt="Rebound Zuid-Utrecht Logo" class="header-logo">
             <div class="header-text">
                 <h1>📋 Presentielijst</h1>
@@ -466,11 +510,19 @@
                 <button class="settings-button" onclick="showTab('settings')">
                     <!-- Tandwiel SVG icoon van Lucide Icons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings">
-                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.78 1.22a2 2 0 0 0 .73 2.73l.04.02a2 2 0 0 1 .97 1.95v.44a2 2 0 0 1-.97 1.95l-.04.02a2 2 0 0 0-.73 2.73l.78 1.22a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.78-1.22a2 2 0 0 0-.73-2.73l-.04-.02a2 2 0 0 1-.97-1.95v-.44a2 2 0 0 1 .97-1.95l.04-.02a2 2 0 0 0 .73-2.73l-.78-1.22a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.78 1.22a2 2 0 0 0 .73 2.73l.04.02a2 2 0 0 1 .97 1.95v.44a2 2 0 0 1-.97 1.95l-.04.02a2 2 0 0 0-.73 2.73l.78 1.22a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 = 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.78-1.22a2 2 0 0 0-.73-2.73l-.04-.02a2 2 0 0 1-.97-1.95v-.44a2 2 0 0 1 .97-1.95l.04-.02a2 2 0 0 0 .73-2.73l-.78-1.22a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
                         <circle cx="12" cy="12" r="3"/>
                     </svg>
                 </button>
             </div>
+
+            <!-- Nieuwe datum navigatie sectie -->
+            <div class="date-navigation">
+                <button onclick="changeDay(-1)">← Vorige Dag</button>
+                <input type="date" id="datePicker" onchange="selectDate()">
+                <button onclick="changeDay(1)">Volgende Dag →</button>
+            </div>
+
 
             <div class="tabs">
                 <button class="tab active" onclick="showTab('attendance')">Presentie</button>
@@ -622,6 +674,41 @@
         let currentStudent = null;
         let defaultEmail = localStorage.getItem('defaultEmail') || 'm.vanzeijl@rebound-zu.nl';
 
+        // Datum variabele voor geschiedenis
+        let currentAttendanceDate = new Date(); // Standaard op vandaag
+
+        // Functie om een datum te formatteren naar YYYY-MM-DD
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Functie om de datumkiezer te initialiseren
+        function initializeDatePicker() {
+            const datePicker = document.getElementById('datePicker');
+            datePicker.value = formatDate(currentAttendanceDate);
+        }
+
+        // Functie om de geselecteerde datum te wijzigen via de picker
+        function selectDate() {
+            const datePicker = document.getElementById('datePicker');
+            currentAttendanceDate = new Date(datePicker.value);
+            // Pas de tijdzone aan om problemen met datumverschuiving te voorkomen
+            currentAttendanceDate.setMinutes(currentAttendanceDate.getMinutes() + currentAttendanceDate.getTimezoneOffset());
+            updateCurrentDateDisplay();
+            syncAttendance(); // Synchroniseer de presentie voor de nieuwe datum
+        }
+
+        // Functie om de datum te wijzigen met knoppen (vorige/volgende dag)
+        function changeDay(offset) {
+            currentAttendanceDate.setDate(currentAttendanceDate.getDate() + offset);
+            initializeDatePicker(); // Update de datumkiezer UI
+            updateCurrentDateDisplay();
+            syncAttendance(); // Synchroniseer de presentie voor de nieuwe datum
+        }
+
         // Custom modal variables and functions
         let customConfirmCallback = null;
 
@@ -660,16 +747,15 @@
         });
 
 
-        // Function to display the current date
-        function updateCurrentDate() {
-            const now = new Date();
+        // Function to display the current date in header
+        function updateCurrentDateDisplay() {
             const options = { 
                 weekday: 'long', 
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric' 
             };
-            document.getElementById('currentDate').textContent = now.toLocaleDateString('nl-NL', options);
+            document.getElementById('currentDate').textContent = currentAttendanceDate.toLocaleDateString('nl-NL', options);
         }
 
         // Functions for email settings
@@ -885,8 +971,7 @@
 
         // Function to generate email content
         function generateEmailContent() {
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('nl-NL', { 
+            const dateStr = currentAttendanceDate.toLocaleDateString('nl-NL', { 
                 weekday: 'long', 
                 year: 'numeric', 
                 month: 'long', 
@@ -953,8 +1038,7 @@
                 }
 
                 const emailBody = generateEmailContent();
-                const now = new Date();
-                const dateStr = now.toLocaleDateString('nl-NL', { 
+                const dateStr = currentAttendanceDate.toLocaleDateString('nl-NL', { 
                     weekday: 'long', 
                     year: 'numeric', 
                     month: 'long', 
@@ -977,8 +1061,7 @@
                     return;
                 }
 
-                const now = new Date();
-                const dateStr = now.toLocaleDateString('nl-NL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                const dateStr = currentAttendanceDate.toLocaleDateString('nl-NL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
                 const subject = encodeURIComponent(`Presentielijst - ${dateStr}`);
                 const emailBodyForWeb = generateEmailContent();
                 const bodyForWeb = encodeURIComponent(emailBodyForWeb);
@@ -1004,25 +1087,26 @@
         const db = firebase.database();
         const auth = firebase.auth(); // Initialiseer Firebase Auth
 
-        // Synchronize students with Firebase
+        // Synchronize students with Firebase (global list, not date-specific)
         function syncStudents() {
             db.ref('students').on('value', snapshot => {
                 students = snapshot.val() || [];
                 loadStudents(); // Update the displayed list of students
-                // initializeAttendance() is not called here to prevent overwriting
-                // existing attendance statuses on every page refresh.
-                // syncAttendance() will ensure all students have a status.
+                // Na het laden van studenten, zorg ervoor dat de presentielijst wordt bijgewerkt
+                // Dit zorgt ervoor dat nieuw toegevoegde studenten op 'unknown' staan voor de huidige datum
+                syncAttendance(); 
             });
         }
 
-        // Synchronize attendance with Firebase
+        // Synchronize attendance for the current selected date with Firebase
         function syncAttendance() {
-            db.ref('attendance').on('value', snapshot => {
+            const datePath = formatDate(currentAttendanceDate);
+            db.ref('attendance/' + datePath).on('value', snapshot => {
                 const firebaseAttendance = snapshot.val() || {};
                 let updatedAttendance = { ...firebaseAttendance }; // Start with existing Firebase data
                 let changed = false;
 
-                // Ensure each student has an attendance status, default to 'unknown'
+                // Ensure each student has an attendance status for this date, default to 'unknown'
                 // if not present in Firebase data. Existing statuses are preserved.
                 students.forEach(student => {
                     if (!updatedAttendance[student]) {
@@ -1032,9 +1116,7 @@
                 });
 
                 // Update the global attendance and save if changes have been made
-                // (e.g., new students set to 'unknown') or if it's the initial load
-                // and 'attendance' was empty but students exist.
-                if (changed || (Object.keys(attendance).length === 0 && students.length > 0 && !Object.keys(firebaseAttendance).length)) {
+                if (changed) {
                     attendance = updatedAttendance;
                     saveAttendance(); // Persist 'unknown' statuses for newly added students or initial load
                 } else {
@@ -1050,9 +1132,10 @@
             db.ref('students').set(students);
         }
 
-        // Save attendance data to Firebase
+        // Save attendance data for the current selected date to Firebase
         function saveAttendance() {
-            db.ref('attendance').set(attendance);
+            const datePath = formatDate(currentAttendanceDate);
+            db.ref('attendance/' + datePath).set(attendance);
         }
 
         // Add a student (Firebase version)
@@ -1062,8 +1145,8 @@
             if (name && !students.includes(name)) {
                 students.push(name);
                 saveStudents(); // Save student list to Firebase
-                attendance[name] = { status: 'unknown' }; // Set new student's initial status to unknown
-                saveAttendance(); // Save attendance (including the new student's status) to Firebase
+                // A new student is by default 'unknown' for the currently selected date.
+                // This will be handled by syncAttendance when students list changes.
                 nameInput.value = '';
             }
         }
@@ -1073,8 +1156,21 @@
             showCustomConfirm(`Weet je zeker dat je ${name} wilt verwijderen?`, () => {
                 students = students.filter(s => s !== name);
                 saveStudents();
-                delete attendance[name]; // Remove attendance record for the deleted student
-                saveAttendance();
+                // Remove attendance record for this student across ALL dates (optional, but cleaner)
+                // This would require iterating through all dates or a more complex Firebase rule.
+                // For now, we only delete it from the current day's attendance object.
+                // A better long-term solution might involve cloud functions for a full delete.
+                const datePath = formatDate(currentAttendanceDate);
+                db.ref('attendance/' + datePath + '/' + name).remove()
+                    .then(() => {
+                        console.log(`Attendance for ${name} on ${datePath} removed.`);
+                        delete attendance[name]; // Remove from local state
+                        updateAttendanceDisplay(); // Refresh UI
+                    })
+                    .catch(error => {
+                        console.error("Error removing attendance:", error);
+                        showCustomAlert("Fout bij het verwijderen van presentiegegevens.");
+                    });
             });
         }
 
@@ -1101,40 +1197,43 @@
                 delete attendance[currentStudent].comment; // Clear comment for present/unknown
             }
 
-            saveAttendance(); // Save changes to Firebase
+            saveAttendance(); // Save changes to Firebase for current date
             closeModal();
         }
 
         // Initialize attendance (used when starting a new day or initial load)
         initializeAttendance = function() {
-            attendance = {}; // Clear existing attendance for a fresh start
+            attendance = {}; // Clear existing attendance for a fresh start for the current date
             students.forEach(student => {
-                attendance[student] = { status: 'unknown' }; // Set all students to 'unknown'
+                attendance[student] = { status: 'unknown' }; // Set all students to 'unknown' for current date
             });
-            saveAttendance(); // Save the newly initialized attendance to Firebase
+            saveAttendance(); // Save the newly initialized attendance to Firebase for current date
         }
 
         // Reset attendance for a new day (Firebase version)
         resetAttendance = function() {
             showCustomConfirm('Weet je zeker dat je een nieuwe dag wilt starten? Alle huidige presentiegegevens gaan verloren.', () => {
-                initializeAttendance(); // Call the reset function
-                updateCurrentDate();
+                currentAttendanceDate = new Date(); // Reset datum naar vandaag
+                initializeDatePicker();
+                updateCurrentDateDisplay();
+                initializeAttendance(); // Call the reset function for the current date
             });
         }
 
         // Clear only the attendance list (Firebase version)
         clearAttendanceOnly = function() {
-            showCustomConfirm('Weet je zeker dat je ALLEEN de presentielijst wilt leegmaken? Leerlingen blijven behouden.', () => {
-                initializeAttendance(); // Call the reset function
-                updateCurrentDate();
-                showCustomAlert('Presentielijst is geleegd.');
+            showCustomConfirm('Weet je zeker dat je ALLEEN de presentielijst van deze dag wilt leegmaken? Leerlingen blijven behouden.', () => {
+                initializeAttendance(); // Call the reset function for the current date
+                updateCurrentDateDisplay();
+                showCustomAlert('Presentielijst is geleegd voor deze dag.');
             });
         }
 
         // Consolidated DOMContentLoaded listener
         document.addEventListener('DOMContentLoaded', function() {
             // UI Initializations
-            updateCurrentDate();
+            updateCurrentDateDisplay();
+            initializeDatePicker(); // Initialize the date picker to current date
             loadEmailSettings();
             
             // Modal close functionality
@@ -1167,8 +1266,8 @@
                     // Nadat de gebruiker is aangemeld, kun je je database-synchronisatiefuncties aanroepen.
                     // Dit zorgt ervoor dat de syncStudents en syncAttendance pas beginnen nadat
                     // er een geauthenticeerde gebruiker is.
-                    syncStudents();
-                    syncAttendance();
+                    syncStudents(); // Synchroniseert de studentenlijst globaal
+                    // syncAttendance() wordt nu aangeroepen binnen syncStudents() of na datumselectie
                 })
                 .catch((error) => {
                     console.error("Fout bij anonieme aanmelding:", error.message);
