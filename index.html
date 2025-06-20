@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentielijst App</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <style>
+        /* Algemene reset en basisstijlen */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* Header stijlen */
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .header-logo {
+            height: 80px;
+            max-width: 250px;
+        }
+
+        .header-text h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header-text .school-name {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .date-display {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* Hoofdinhoud stijlen */
+        .main-content {
+            padding: 30px;
+        }
+
+        /* Instellingenknop stijlen */
+        .settings-button-container {
+            text-align: left; /* Zorgt voor links uitlijnen */
+            margin-bottom: 15px; /* Ruimte onder de knop */
+        }
+
+        .settings-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 2.5em; /* Maak het icoon groter */
+            color: #4facfe; /* Kleur van het icoon */
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+            padding: 5px; /* Voeg wat padding toe voor gemakkelijke klik */
+            border-radius: 5px;
+        }
+
+        .settings-button:hover {
+            transform: rotate(30deg); /* Draai-effect bij hover */
+            color: #00f2fe; /* Verander kleur bij hover */
+        }
+
+
+        /* Tabblad stijlen */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            background: #f5f5f5;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            border-radius: 10px 10px 0 0;
+            margin-right: 5px;
+        }
+
+        .tab.active {
+            background: #4facfe;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Leerlingenbeheer sectie stijlen */
+        .student-management {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        /* Knop stijlen */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+
+        .students-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .student-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .student-item:hover {
+            border-color: #4facfe;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Aanwezigheidsrooster stijlen */
+        .attendance-grid {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .attendance-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 4px solid;
+        }
+
+        .attendance-section.unknown {
+            border-left-color: #ffc107; /* Geel */
+        }
+
+        .attendance-section.present {
+            border-left-color: #28a745; /* Groen */
+        }
+
+        .attendance-section.late {
+            border-left-color: #fd7e14; /* Oranje */
+        }
+
+        .attendance-section.absent {
+            border-left-color: #dc3545; /* Rood */
+        }
+
+        .attendance-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            color: #333;
+        }
+
+        .student-attendance-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .student-attendance-item:hover {
+            border-color: #4facfe;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Modale venster stijlen */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .modal-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.present {
+            background: #28a745;
+            color: white;
+        }
+
+        .modal-btn.late {
+            background: #fd7e14;
+            color: white;
+        }
+
+        .modal-btn.absent {
+            background: #dc3545;
+            color: white;
+        }
+
+        .time-input, .reason-select, .comment-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        /* E-mail sectie stijlen */
+        .email-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .summary-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4facfe;
+        }
+
+        /* Sluitknop voor modale venster */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        /* Resetknop stijlen */
+        .reset-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            margin-left: 10px;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Instellingen sectie stijlen (nu een div, geen tab) */
+        .settings-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .settings-section h4 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        /* Datum selector stijlen */
+        .date-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .date-navigation button {
+            padding: 8px 15px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #4facfe;
+            color: white;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .date-navigation button:hover {
+            background: #00f2fe;
+            transform: translateY(-1px);
+        }
+
+        .date-navigation input[type="date"] {
+            padding: 8px 12px;
+            border: 2px solid #ced4da;
+            border-radius: 8px;
+            font-size: 1em;
+            color: #333;
+            text-align: center;
+            cursor: pointer;
+            background: white;
+        }
+
+
+        /* Media queries voor responsiviteit */
+        @media (max-width: 768px) {
+            .attendance-grid {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                grid-template-columns: 1fr;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .modal-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .header-logo {
+                height: 60px;
+                max-width: 200px;
+            }
+            .date-navigation {
+                flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://swv-zuidutrecht.nl/wp-content/uploads/2022/12/Logo-768266.jpg",PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDMwMCAxNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Im9yYW5nZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkE1MDA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGOD4wMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InllbGxvdyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkQ3MDA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGQzEwNztzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdyZWVuIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KCiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMzM0NEMzI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzIyOEIyMjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbWUiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojQUZGRjJGO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5QUNEMzI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhcjxncmFkaWVudD4KICAgIDxsaW5lYXJncmFkaWVudCBpZD0iYmx1ZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM0MTY5RTE7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFFOTBGRjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpZ2h0Ymx1ZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM4N0NFRUI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6Izg3Q0VFQTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InB1cnBsZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MzcwREI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzhBMjJFNTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gViBzaGFwZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjQwLDIwIDgwLDIwIDExNSw3NSA3NSw3NSB9cmVhZ3JlZW4iLz4KICA8cG9seWdvbiBwb2ludHM9IjgwLDIwIDEyMCwyMCAxMTUsNzUgODAsNzUigiBmaWxsPSJ1cmwoI3llbGxvdykiLz4KICA8cG9seWdvbiBwb2ludHM9IjE4MCwyMCAyMjAsMjAgMTg1LDc1IDE1MCw3NSIgZmlsbD0idXJsKCNncmVlZW4pIi8+CiAgPHBvbHlnb24gcGpoaW50cz0iNTUwLDIwIDU5MCwyMCA1ODAsNzAgNTQ1LDc1IiBmaWxsPSJ1cmwoI2xpbWUpIi8+CiAgIS0tIEJvdHRvbSBlbGVtZW50cyAtLT4KICA8cG9seWdvbiBwb2ludHM9IjQwLDkwIDgwLDkwIDExNSwxMzAgNDAsMTMwIiBmaWxsPSJ1cmwoI2xpZ2h0Ymx1ZSkiLz4KICA8cG9seWdvbiBwb2ludHM9IjgwLDkwIDEyMCw5MCAxMTUsMTMwIDgwLDEzMCIgZmlsbD0idXJsKCNibHVlKSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTIwLDkwIDE2MCw5MCAyMjAsMTMwIDExNSwxMzAiIGZpbGw9InVybCgjcHVycGxlKSIvPgogIDx0ZXh0IHg9IjI2MCIgeT0iNDAiIGZvbnQtZmFtaWx5PSJBCMLYW5hLCBzYW5zLXNlcmlmIiAKICAgICAgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtc2l6ZT0iMjhweCIgZmlsbD0iIzM0OTZGQSI+UmVib3VuZzwvdGV4dD4KICA8dGV4dCB4PSIyNjAiIHk9IjY1IiBmb250LWZhbWl5PSJBcmlhbCwgc2Fucy1zZXJpZiIgCiAgICAgIGZvbnQtc2l6ZT0iMThweCIgZmlsbD0iIzMzMyI+WnVpZC1VdHJlY2h0PC90ZXh0PgogIDx0ZXh0IHg9IjI2MCIgeT0iOTAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgCiAgICAgIGZvbnQtc2l6ZT0iMTJweCIgZm9udC1zdHlsZT0iaXRhbGljIj5QZXJzb29ubGlqa2UgYWFuZGFhY2h0IGVuIGNvYWNoaW5nPC90ZXh0PgogIDx0ZXh0IHg9IjI2MCIgeT0iMTA1IiBmb250LWZhbWl5PSJBcmlhbCwgc2Fucy1zZXJpZiIgCiAgICAgIGZvbnQtc2l6ZT0iMTJweCIgZmllbGwtc3R5bGU9Iml0YWxpYyI+aW4gZWVuIHRpajZlXGFhZGVsaWprZSBzY2hvb2w8L3RleHRwPgo8L3N2Zz4=" 
+                 alt="Rebound Zuid-Utrecht Logo" class="header-logo">
+            <div class="header-text">
+                <h1>📋 Presentielijst</h1>
+                <div class="date-display" id="currentDate"></div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Nieuwe instellingenknop -->
+            <div class="settings-button-container">
+                <button class="settings-button" onclick="showTab('settings')">
+                    <!-- Tandwiel SVG icoon van Lucide Icons -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.78 1.22a2 2 0 0 0 .73 2.73l.04.02a2 2 0 0 1 .97 1.95v.44a2 2 0 0 1-.97 1.95l-.04.02a2 2 0 0 0-.73 2.73l.78 1.22a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 = 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.78-1.22a2 2 0 0 0-.73-2.73l-.04-.02a2 2 0 0 1-.97-1.95v-.44a2 2 0 0 1 .97-1.95l.04-.02a2 2 0 0 0 .73-2.73l-.78-1.22a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Nieuwe datum navigatie sectie -->
+            <div class="date-navigation">
+                <button onclick="changeDay(-1)">← Vorige Dag</button>
+                <input type="date" id="datePicker" onchange="selectDate()">
+                <button onclick="changeDay(1)">Volgende Dag →</button>
+            </div>
+
+
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('attendance')">Presentie</button>
+                <button class="tab" onclick="showTab('students')">Leerlingen Beheren</button>
+                <!-- Instellingen tabblad is verwijderd en vervangen door een aparte knop -->
+            </div>
+
+            <!-- Presentie Tab -->
+            <div id="attendance" class="tab-content active">
+                <div class="attendance-wrapper" style="overflow-x:auto;width:100%;">
+                    <div class="attendance-grid">
+                        <div class="attendance-section unknown">
+                            <h3>🤔 Onbekend (<span id="unknownCount">0</span>)</h3>
+                            <div id="unknownList"></div>
+                        </div>
+
+                        <div class="attendance-section present">
+                            <h3>✅ Aanwezig (<span id="presentCount">0</span>)</h3>
+                            <div id="presentList"></div>
+                        </div>
+
+                        <div class="attendance-section late">
+                            <h3>⏰ Te laat (<span id="lateCount">0</span>)</h3>
+                            <div id="lateList"></div>
+                        </div>
+
+                        <div class="attendance-section absent">
+                            <h3>❌ Afwezig (<span id="absentCount">0</span>)</h3>
+                            <div id="absentList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="email-section">
+                    <h3>📧 E-mail Instellingen</h3>
+                    <input type="email" class="email-input" id="emailAddress" placeholder="E-mailadres voor presentielijst" readonly>
+                    
+                    <div class="summary-box">
+                        <h4>📊 Samenvatting</h4>
+                        <div id="attendanceSummary"></div>
+                    </div>
+
+                    
+                    <button class="btn btn-success" onclick="sendEmail()">📤 Verstuur Presentielijst</button>
+                    <button class="btn btn-primary" onclick="openOutlookWeb()">📤 Open in Outlook (Web)</button>
+
+                    <button class="btn reset-btn" onclick="resetAttendance()">🔄 Nieuwe Dag</button>
+                </div>
+            </div>
+
+            <!-- Leerlingen Beheren Tab -->
+            <div id="students" class="tab-content">
+                <div class="student-management">
+                    <h3>👥 Leerlingen Beheren</h3>
+                    <div class="input-group">
+                        <input type="text" id="studentName" placeholder="Naam van nieuwe leerling" onkeypress="handleEnterKey(event)">
+                        <button class="btn btn-primary" onclick="addStudent()">➕ Toevoegen</button>
+                    </div>
+                    <div class="students-list" id="studentsList"></div>
+                </div>
+            </div>
+
+            <!-- Instellingen Sectie (was een tab, nu een stand-alone div) -->
+            <div id="settings" class="tab-content">
+                <div class="student-management">
+                    <h3>⚙️ Instellingen</h3>
+                    <div class="settings-section">
+                        <h4>📧 E-mail Instellingen</h4>
+                        <div class="input-group">
+                            <input type="email" class="email-input" id="defaultEmail" placeholder="Standaard e-mailadres">
+                            <button class="btn btn-primary" onclick="saveEmailSettings()">💾 Opslaan</button>
+                        </div>
+                        <p style="color: #666; margin-top: 10px;">
+                            Dit is het standaard e-mailadres waar de presentielijsten naartoe worden gestuurd.
+                        </p>
+                    </div>
+                    
+                    <div class="settings-section" style="margin-top: 30px;">
+                        <h4>🗂️ Data Beheer</h4>
+                        <button class="btn btn-danger" onclick="resetAllData()">🗑️ Alle Gegevens Wissen</button>
+                        <p style="color: #666; margin-top: 10px;">
+                            Dit wist alle leerlingen en instellingen. Gebruik dit alleen als je opnieuw wilt beginnen.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modaal venster voor presentie -->
+    <div id="attendanceModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalStudentName"></h2>
+            <div class="modal-buttons">
+                <button class="modal-btn present" onclick="markAttendance('present')">✅ Aanwezig</button>
+                <button class="modal-btn late" onclick="showLateInput()">⏰ Te laat</button>
+                <button class="modal-btn absent" onclick="showAbsentInput()">❌ Afwezig</button>
+            </div>
+            <div id="lateInput" style="display: none;">
+                <input type="time" class="time-input" id="lateTime" value="09:05">
+                <input type="text" class="comment-input" id="lateComment" placeholder="Optionele opmerking">
+                <button class="btn btn-primary" onclick="markAttendance('late')">Bevestig Te Laat</button>
+            </div>
+            <div id="absentInput" style="display: none;">
+                <select class="reason-select" id="absentReason" onchange="toggleCustomReason()">
+                    <option value="ziek">Ziek</option>
+                    <option value="moederschool">Moederschool</option>
+                    <option value="stage">Stage</option>
+                    <option value="overig">Overig</option>
+                </select>
+                <input type="text" class="time-input" id="customReason" placeholder="Vul reden in..." style="display: none;">
+                <button class="btn btn-primary" onclick="markAttendance('absent')">Bevestig Afwezig</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="customConfirmModal" class="modal">
+        <div class="modal-content">
+            <h2 id="customConfirmMessage"></h2>
+            <div class="modal-buttons">
+                <button class="modal-btn present" id="customConfirmYes">Ja</button>
+                <button class="modal-btn danger" id="customConfirmNo">Nee</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div id="customAlertModal" class="modal">
+        <div class="modal-content">
+            <h2 id="customAlertMessage"></h2>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="customAlertOk">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <!-- Geconsolideerd JavaScript voor de app -->
+    <script>
+        // Data storage (will be overwritten by Firebase Realtime Database later)
+        let students = JSON.parse(localStorage.getItem('students') || '[]');
+        let attendance = {};
+        let currentStudent = null;
+        let defaultEmail = localStorage.getItem('defaultEmail') || 'm.vanzeijl@rebound-zu.nl';
+
+        // Datum variabele voor geschiedenis
+        let currentAttendanceDate = new Date(); // Standaard op vandaag
+
+        // Functie om een datum te formatteren naar YYYY-MM-DD
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Functie om de datumkiezer te initialiseren
+        function initializeDatePicker() {
+            const datePicker = document.getElementById('datePicker');
+            datePicker.value = formatDate(currentAttendanceDate);
+        }
+
+        // Functie om de geselecteerde datum te wijzigen via de picker
+        function selectDate() {
+            const datePicker = document.getElementById('datePicker');
+            currentAttendanceDate = new Date(datePicker.value);
+            // Pas de tijdzone aan om problemen met datumverschuiving te voorkomen
+            currentAttendanceDate.setMinutes(currentAttendanceDate.getMinutes() + currentAttendanceDate.getTimezoneOffset());
+            updateCurrentDateDisplay();
+            syncAttendance(); // Synchroniseer de presentie voor de nieuwe datum
+        }
+
+        // Functie om de datum te wijzigen met knoppen (vorige/volgende dag)
+        function changeDay(offset) {
+            currentAttendanceDate.setDate(currentAttendanceDate.getDate() + offset);
+            initializeDatePicker(); // Update de datumkiezer UI
+            updateCurrentDateDisplay();
+            syncAttendance(); // Synchroniseer de presentie voor de nieuwe datum
+        }
+
+        // Custom modal variables and functions
+        let customConfirmCallback = null;
+
+        function showCustomConfirm(message, onConfirm, onCancel) {
+            document.getElementById('customConfirmMessage').textContent = message;
+            document.getElementById('customConfirmModal').style.display = 'block';
+            customConfirmCallback = { onConfirm, onCancel };
+        }
+
+        function showCustomAlert(message, onOk) {
+            document.getElementById('customAlertMessage').textContent = message;
+            document.getElementById('customAlertModal').style.display = 'block';
+            document.getElementById('customAlertOk').onclick = () => {
+                document.getElementById('customAlertModal').style.display = 'none';
+                if (onOk) onOk();
+            };
+        }
+
+        // Initialize custom confirm button actions
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('customConfirmYes').onclick = () => {
+                document.getElementById('customConfirmModal').style.display = 'none';
+                if (customConfirmCallback && customConfirmCallback.onConfirm) {
+                    customConfirmCallback.onConfirm();
+                }
+                customConfirmCallback = null;
+            };
+
+            document.getElementById('customConfirmNo').onclick = () => {
+                document.getElementById('customConfirmModal').style.display = 'none';
+                if (customConfirmCallback && customConfirmCallback.onCancel) {
+                    customConfirmCallback.onCancel();
+                }
+                customConfirmCallback = null;
+            };
+        });
+
+
+        // Function to display the current date in header
+        function updateCurrentDateDisplay() {
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            document.getElementById('currentDate').textContent = currentAttendanceDate.toLocaleDateString('nl-NL', options);
+        }
+
+        // Functions for email settings
+        function loadEmailSettings() {
+            document.getElementById('emailAddress').value = defaultEmail;
+            document.getElementById('defaultEmail').value = defaultEmail;
+        }
+
+        function saveEmailSettings() {
+            const newEmail = document.getElementById('defaultEmail').value.trim();
+            if (newEmail && isValidEmail(newEmail)) {
+                defaultEmail = newEmail;
+                localStorage.setItem('defaultEmail', defaultEmail);
+                document.getElementById('emailAddress').value = defaultEmail;
+                showCustomAlert('E-mailinstellingen opgeslagen!');
+            } else {
+                showCustomAlert('Voer een geldig e-mailadres in.');
+            }
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Function to reset all data
+        function resetAllData() {
+            showCustomConfirm('Weet je zeker dat je ALLE gegevens wilt wissen? Dit kan niet ongedaan worden gemaakt.', () => {
+                showCustomConfirm('Laatste kans! Dit wist alle leerlingen en instellingen.', () => {
+                    localStorage.clear();
+                    students = [];
+                    attendance = {};
+                    defaultEmail = 'maxhendriks@gmail.com'; // Reset to default email
+                    loadStudents(); // Load empty student list
+                    loadEmailSettings(); // Load default email settings
+                    showCustomAlert('Alle gegevens zijn gewist.');
+                });
+            });
+        }
+
+        // Function to show/hide tabs
+        function showTab(tabName) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Only tab buttons get the 'active' class, not the settings button (which is not a tab)
+            const clickedElement = event.target;
+            if (clickedElement.classList.contains('tab')) {
+                clickedElement.classList.add('active');
+            } else {
+                // If the settings button was clicked, ensure no other tab is active
+                document.getElementById('attendance').classList.remove('active');
+                document.getElementById('students').classList.remove('active');
+            }
+        }
+
+        // loadStudents and other display functions
+        function loadStudents() {
+            const list = document.getElementById('studentsList');
+            list.innerHTML = students.map(name => `
+                <div class="student-item">
+                    <span>${name}</span>
+                    <button class="btn btn-danger" onclick="removeStudent('${name}')">🗑️</button>
+                </div>
+            `).join('');
+        }
+
+        function handleEnterKey(event) {
+            if (event.key === 'Enter') {
+                addStudent(); // Calls the Firebase version of addStudent
+            }
+        }
+
+        // Function to update the attendance display
+        function updateAttendanceDisplay() {
+            const sections = {
+                unknown: document.getElementById('unknownList'),
+                present: document.getElementById('presentList'),
+                late: document.getElementById('lateList'),
+                absent: document.getElementById('absentList')
+            };
+
+            // Clear all sections
+            Object.values(sections).forEach(section => section.innerHTML = '');
+
+            // Prepare students grouped by status for display
+            const groupedStudents = {
+                unknown: [],
+                present: [],
+                late: [],
+                absent: []
+            };
+
+            students.forEach(student => {
+                const status = attendance[student]?.status || 'unknown';
+                groupedStudents[status].push(student);
+            });
+
+            // Sort 'unknown' students alphabetically
+            groupedStudents.unknown.sort((a, b) => a.localeCompare(b, 'nl', { sensitivity: 'base' }));
+
+            // Populate sections based on sorted and grouped data
+            for (const statusType in groupedStudents) {
+                groupedStudents[statusType].forEach(student => {
+                    const section = sections[statusType];
+                    const div = document.createElement('div');
+                    div.className = 'student-attendance-item';
+                    div.onclick = () => openAttendanceModal(student);
+                    
+                    let displayText = student;
+                    if (statusType === 'late' && attendance[student].time) {
+                        displayText += ` (${attendance[student].time}`;
+                        if (attendance[student].comment) {
+                            displayText += `, ${attendance[student].comment}`;
+                        }
+                        displayText += `)`;
+                    } else if (statusType === 'absent' && attendance[student].reason) {
+                        displayText += ` (${attendance[student].reason})`;
+                    }
+                    
+                    div.textContent = displayText;
+                    section.appendChild(div);
+                });
+            }
+
+            // Update counters
+            document.getElementById('unknownCount').textContent = groupedStudents.unknown.length;
+            document.getElementById('presentCount').textContent = groupedStudents.present.length;
+            document.getElementById('lateCount').textContent = groupedStudents.late.length;
+            document.getElementById('absentCount').textContent = groupedStudents.absent.length;
+
+            updateSummary();
+        }
+
+        // Modal window functions
+        function openAttendanceModal(student) {
+            currentStudent = student;
+            document.getElementById('modalStudentName').textContent = student;
+            document.getElementById('attendanceModal').style.display = 'block';
+            
+            // Reset modal state
+            document.getElementById('lateInput').style.display = 'none';
+            document.getElementById('absentInput').style.display = 'none';
+            document.getElementById('customReason').style.display = 'none';
+            document.getElementById('lateComment').value = ''; // Clear comment field
+            
+            // Set current time as default for late
+            const now = new Date();
+            const currentTime = now.getHours().toString().padStart(2, '0') + ':' + 
+                               now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('lateTime').value = currentTime;
+
+            // Load existing late comment if available
+            if (attendance[currentStudent]?.status === 'late' && attendance[currentStudent].comment) {
+                document.getElementById('lateComment').value = attendance[currentStudent].comment;
+            }
+        }
+
+        function toggleCustomReason() {
+            const reason = document.getElementById('absentReason').value;
+            const customInput = document.getElementById('customReason');
+            
+            if (reason === 'overig') {
+                customInput.style.display = 'block';
+                customInput.focus();
+            } else {
+                customInput.style.display = 'none';
+                customInput.value = '';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('attendanceModal').style.display = 'none';
+            currentStudent = null;
+        }
+
+        function showLateInput() {
+            document.getElementById('lateInput').style.display = 'block';
+            document.getElementById('absentInput').style.display = 'none';
+        }
+
+        function showAbsentInput() {
+            document.getElementById('absentInput').style.display = 'block';
+            document.getElementById('lateInput').style.display = 'none';
+        }
+
+        // markAttendance function will be overwritten by Firebase script.
+
+        // Function to update the summary
+        function updateSummary() {
+            const summary = document.getElementById('attendanceSummary');
+            const present = students.filter(s => attendance[s]?.status === 'present').length;
+            const late = students.filter(s => attendance[s]?.status === 'late').length;
+            const absent = students.filter(s => attendance[s]?.status === 'absent').length;
+            const unknown = students.filter(s => attendance[s]?.status === 'unknown').length;
+            const total = students.length;
+
+            summary.innerHTML = `
+                <p><strong>Totaal leerlingen:</strong> ${total}</p>
+                <p><strong>Aanwezig:</strong> ${present} | <strong>Te laat:</strong> ${late} | <strong>Afwezig:</strong> ${absent} | <strong>Onbekend:</strong> ${unknown}</p>
+            `;
+        }
+
+        // Function to generate email content
+        function generateEmailContent() {
+            const dateStr = currentAttendanceDate.toLocaleDateString('nl-NL', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+
+            let emailBody = `Presentielijst - ${dateStr}\n\n`;
+
+            // Aanwezig
+            const presentStudents = students.filter(s => attendance[s]?.status === 'present');
+            if (presentStudents.length > 0) {
+                emailBody += `AANWEZIG (${presentStudents.length}):\n`;
+                presentStudents.forEach(student => {
+                    emailBody += `- ${student}\n`;
+                });
+                emailBody += '\n';
+            }
+
+            // Te laat
+            const lateStudents = students.filter(s => attendance[s]?.status === 'late');
+            if (lateStudents.length > 0) {
+                emailBody += `TE LAAT (${lateStudents.length}):\n`;
+                lateStudents.forEach(student => {
+                    const time = attendance[student].time || 'tijd onbekend';
+                    let lateEntry = `- ${student} (${time}`;
+                    if (attendance[student].comment) {
+                        lateEntry += `, ${attendance[student].comment}`;
+                    }
+                    lateEntry += `)`;
+                    emailBody += lateEntry + '\n';
+                });
+                emailBody += '\n';
+            }
+
+            // Afwezig
+            const absentStudents = students.filter(s => attendance[s]?.status === 'absent');
+            if (absentStudents.length > 0) {
+                emailBody += `AFWEZIG (${absentStudents.length}):\n`;
+                absentStudents.forEach(student => {
+                    const reason = attendance[student].reason || 'reden onbekend';
+                    emailBody += `- ${student} (${reason})\n`;
+                });
+                emailBody += '\n';
+            }
+
+            // Onbekend
+            const unknownStudentsForEmail = students.filter(s => attendance[s]?.status === 'unknown');
+            if (unknownStudentsForEmail.length > 0) {
+                emailBody += `ONBEKEND/NIET GEREGISTREERD (${unknownStudentsForEmail.length}):\n`;
+                unknownStudentsForEmail.forEach(student => {
+                    emailBody += `- ${student}\n`;
+                });
+            }
+            return emailBody;
+        }
+
+        // Function for "Verstuur Presentielijst" button (uses mailto: to trigger app chooser)
+        function sendEmail() {
+            showCustomConfirm("Met welke e-mailapp wil je de mail versturen?\nKlik op Ja om door te gaan.", () => {
+                const email = defaultEmail;
+                if (!email) {
+                    showCustomAlert('Voer een geldig e-mailadres in via Instellingen.');
+                    return;
+                }
+
+                const emailBody = generateEmailContent();
+                const dateStr = currentAttendanceDate.toLocaleDateString('nl-NL', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+                const subject = encodeURIComponent(`Presentielijst - ${dateStr}`);
+                const body = encodeURIComponent(emailBody);
+                const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+                
+                window.location.href = mailtoLink;
+            });
+        }
+        
+        // Function for "Open in Outlook (Web)" button
+        function openOutlookWeb() {
+            showCustomConfirm("De presentielijst openen in Outlook Web?\nKlik op Ja om door te gaan.", () => {
+                const email = defaultEmail;
+                if (!email) {
+                    showCustomAlert('Voer een geldig e-mailadres in via Instellingen.');
+                    return;
+                }
+
+                const dateStr = currentAttendanceDate.toLocaleDateString('nl-NL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                const subject = encodeURIComponent(`Presentielijst - ${dateStr}`);
+                const emailBodyForWeb = generateEmailContent();
+                const bodyForWeb = encodeURIComponent(emailBodyForWeb);
+                const outlookWebLink = `https://outlook.office.com/mail/deeplink/compose?to=${email}&subject=${subject}&body=${bodyForWeb}`;
+                
+                window.open(outlookWebLink, '_blank'); // Open in new tab/window
+            });
+        }
+
+        // Firebase initialisatie en logica
+        const firebaseConfig = {
+            // VERVANG DEZE WAARDEN MET DE CONFIGURATIE VAN JOUW EIGEN FIREBASE PROJECT
+            apiKey: "AIzaSyAX4HWgJNtFeCDSxNKQzIQljtGvth-ZsxQ",
+            authDomain: "presentie-app.firebaseapp.com",
+            databaseURL: "https://presentie-app-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "presentie-app",
+            storageBucket: "presentie-app.appspot.com",
+            messagingSenderId: "1043734298871",
+            appId: "1:1043734298871:web:7a54ed0f76a1aacea913f2"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const auth = firebase.auth(); // Initialiseer Firebase Auth
+
+        // Synchronize students with Firebase (global list, not date-specific)
+        function syncStudents() {
+            db.ref('students').on('value', snapshot => {
+                students = snapshot.val() || [];
+                loadStudents(); // Update the displayed list of students
+                // Na het laden van studenten, zorg ervoor dat de presentielijst wordt bijgewerkt
+                // Dit zorgt ervoor dat nieuw toegevoegde studenten op 'unknown' staan voor de huidige datum
+                syncAttendance(); 
+            });
+        }
+
+        // Synchronize attendance for the current selected date with Firebase
+        function syncAttendance() {
+            const datePath = formatDate(currentAttendanceDate);
+            db.ref('attendance/' + datePath).on('value', snapshot => {
+                const firebaseAttendance = snapshot.val() || {};
+                let updatedAttendance = { ...firebaseAttendance }; // Start with existing Firebase data
+                let changed = false;
+
+                // Ensure each student has an attendance status for this date, default to 'unknown'
+                // if not present in Firebase data. Existing statuses are preserved.
+                students.forEach(student => {
+                    if (!updatedAttendance[student]) {
+                        updatedAttendance[student] = { status: 'unknown' };
+                        changed = true; // Mark that a change has been made
+                    }
+                });
+
+                // Update the global attendance and save if changes have been made
+                if (changed) {
+                    attendance = updatedAttendance;
+                    saveAttendance(); // Persist 'unknown' statuses for newly added students or initial load
+                } else {
+                    attendance = updatedAttendance; // Only update the local variable if no 'new unknown' status needs to be saved
+                }
+
+                updateAttendanceDisplay();
+            });
+        }
+
+        // Save student list to Firebase
+        function saveStudents() {
+            db.ref('students').set(students);
+        }
+
+        // Save attendance data for the current selected date to Firebase
+        function saveAttendance() {
+            const datePath = formatDate(currentAttendanceDate);
+            db.ref('attendance/' + datePath).set(attendance);
+        }
+
+        // Add a student (Firebase version)
+        addStudent = function() {
+            const nameInput = document.getElementById('studentName');
+            const name = nameInput.value.trim();
+            if (name && !students.includes(name)) {
+                students.push(name);
+                saveStudents(); // Save student list to Firebase
+                // A new student is by default 'unknown' for the currently selected date.
+                // This will be handled by syncAttendance when students list changes.
+                nameInput.value = '';
+            }
+        }
+
+        // Remove a student (Firebase version)
+        removeStudent = function(name) {
+            showCustomConfirm(`Weet je zeker dat je ${name} wilt verwijderen?`, () => {
+                students = students.filter(s => s !== name);
+                saveStudents();
+                // Remove attendance record for this student across ALL dates (optional, but cleaner)
+                // This would require iterating through all dates or a more complex Firebase rule.
+                // For now, we only delete it from the current day's attendance object.
+                // A better long-term solution might involve cloud functions for a full delete.
+                const datePath = formatDate(currentAttendanceDate);
+                db.ref('attendance/' + datePath + '/' + name).remove()
+                    .then(() => {
+                        console.log(`Attendance for ${name} on ${datePath} removed.`);
+                        delete attendance[name]; // Remove from local state
+                        updateAttendanceDisplay(); // Refresh UI
+                    })
+                    .catch(error => {
+                        console.error("Error removing attendance:", error);
+                        showCustomAlert("Fout bij het verwijderen van presentiegegevens.");
+                    });
+            });
+        }
+
+        // Mark attendance (Firebase version)
+        markAttendance = function(status) {
+            if (!currentStudent) return;
+
+            attendance[currentStudent] = { status };
+
+            if (status === 'late') {
+                const time = document.getElementById('lateTime').value;
+                const comment = document.getElementById('lateComment').value.trim(); // Get optional comment
+                attendance[currentStudent].time = time;
+                attendance[currentStudent].comment = comment; // Save the comment
+            } else if (status === 'absent') {
+                let reason = document.getElementById('absentReason').value;
+                if (reason === 'overig') {
+                    const customReason = document.getElementById('customReason').value.trim();
+                    reason = customReason || 'overig';
+                }
+                attendance[currentStudent].reason = reason;
+                delete attendance[currentStudent].comment; // Ensure no lingering comment if status changes from late
+            } else {
+                delete attendance[currentStudent].comment; // Clear comment for present/unknown
+            }
+
+            saveAttendance(); // Save changes to Firebase for current date
+            closeModal();
+        }
+
+        // Initialize attendance (used when starting a new day or initial load)
+        initializeAttendance = function() {
+            attendance = {}; // Clear existing attendance for a fresh start for the current date
+            students.forEach(student => {
+                attendance[student] = { status: 'unknown' }; // Set all students to 'unknown' for current date
+            });
+            saveAttendance(); // Save the newly initialized attendance to Firebase for current date
+        }
+
+        // Reset attendance for a new day (Firebase version)
+        resetAttendance = function() {
+            showCustomConfirm('Weet je zeker dat je een nieuwe dag wilt starten? Alle huidige presentiegegevens gaan verloren.', () => {
+                currentAttendanceDate = new Date(); // Reset datum naar vandaag
+                initializeDatePicker();
+                updateCurrentDateDisplay();
+                initializeAttendance(); // Call the reset function for the current date
+            });
+        }
+
+        // Clear only the attendance list (Firebase version)
+        clearAttendanceOnly = function() {
+            showCustomConfirm('Weet je zeker dat je ALLEEN de presentielijst van deze dag wilt leegmaken? Leerlingen blijven behouden.', () => {
+                initializeAttendance(); // Call the reset function for the current date
+                updateCurrentDateDisplay();
+                showCustomAlert('Presentielijst is geleegd voor deze dag.');
+            });
+        }
+
+        // Consolidated DOMContentLoaded listener
+        document.addEventListener('DOMContentLoaded', function() {
+            // UI Initializations
+            updateCurrentDateDisplay();
+            initializeDatePicker(); // Initialize the date picker to current date
+            loadEmailSettings();
+            
+            // Modal close functionality
+            document.querySelector('.close').onclick = closeModal;
+            window.onclick = function(event) {
+                // Close attendance modal if clicked outside
+                if (event.target === document.getElementById('attendanceModal')) {
+                    closeModal();
+                }
+                // Close custom confirm modal if clicked outside
+                if (event.target === document.getElementById('customConfirmModal')) {
+                    document.getElementById('customConfirmModal').style.display = 'none';
+                    if (customConfirmCallback && customConfirmCallback.onCancel) {
+                        customConfirmCallback.onCancel(); // Treat outside click as cancel
+                    }
+                    customConfirmCallback = null;
+                }
+                // Close custom alert modal if clicked outside
+                if (event.target === document.getElementById('customAlertModal')) {
+                    document.getElementById('customAlertModal').style.display = 'none';
+                    // No onOk() call here, as it's typically for user explicit "OK" click
+                }
+            }
+
+            // Firebase Authentication:
+            // Meld anoniem aan wanneer de app start
+            auth.signInAnonymously()
+                .then(() => {
+                    console.log("Anoniem aangemeld bij Firebase.");
+                    // Nadat de gebruiker is aangemeld, kun je je database-synchronisatiefuncties aanroepen.
+                    // Dit zorgt ervoor dat de syncStudents en syncAttendance pas beginnen nadat
+                    // er een geauthenticeerde gebruiker is.
+                    syncStudents(); // Synchroniseert de studentenlijst globaal
+                    // syncAttendance() wordt nu aangeroepen binnen syncStudents() of na datumselectie
+                })
+                .catch((error) => {
+                    console.error("Fout bij anonieme aanmelding:", error.message);
+                    // Optioneel: toon een foutmelding aan de gebruiker
+                    showCustomAlert("Fout bij het laden van gegevens. Probeer het opnieuw. (" + error.message + ")");
+                });
+        });
+    </script>
+
+</body>
+</html>
